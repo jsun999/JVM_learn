@@ -1,0 +1,23 @@
+#  actuator暴露所有端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+# /actuator/info 会显示以下version信息
+info:
+  version: 1.10.0
+
+spring:
+  profiles:
+    active: prod
+  application:
+    name: hello-service
+eureka:
+  client:
+    service-url:
+      defaultZone: http://peer1:9001/eureka/
+#      设置实例名规则，实现同一主机，不指定端口就能轻松启动多个实例
+#  instance:
+#    instance-id: ${spring.application.name}:${random.int}
+#      ,http://peer2:9002/eureka
