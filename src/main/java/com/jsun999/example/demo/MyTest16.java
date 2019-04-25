@@ -19,6 +19,10 @@ public class MyTest16 extends ClassLoader{
         this.classLoaderName = classLoaderName;
     }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+
     @Override
     public String toString() {
         return "["+ this.classLoaderName+"]";
@@ -35,9 +39,9 @@ public class MyTest16 extends ClassLoader{
         InputStream is = null;
         byte[] data = null;
         ByteArrayOutputStream baos = null;
-
+        className = className.replace(".","/");
         try{
-            is = new FileInputStream(new File(className + this.fileExtentsion));
+            is = new FileInputStream(new File(this.path+className + this.fileExtentsion));
             baos = new ByteArrayOutputStream();
             int ch = 0;
             while(-1 !=(ch=is.read())){
@@ -65,8 +69,12 @@ public class MyTest16 extends ClassLoader{
     }
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         MyTest16 loader1 = new MyTest16("loader1");
-        MyTest16 loader2 = new MyTest16(loader1,"loader2");
-        test(loader2);
+        loader1.setPath("E:\\my_idea_project\\jvm_learn\\target\\classes\\");
+        Class<?> clazz = loader1.loadClass("com.jsun999.example.demo.MyTest1");
+        System.out.println("class:" + clazz.hashCode());
+        Object object = clazz.newInstance();
+        System.out.println(object);
+        System.out.println(object.getClass().getClassLoader());
     }
 
 
