@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 public class MyTest16 extends ClassLoader{
     private String classLoaderName;
+    private String path;
     private String fileExtentsion = ".class";
     public MyTest16(String classLoaderName){
         super();
@@ -25,6 +26,8 @@ public class MyTest16 extends ClassLoader{
 
     @Override
     protected Class<?> findClass(String className) {
+        System.out.println("findClass involed:"+className);
+        System.out.println("class loader name:"+this.classLoaderName);
         byte[] data = this.loadClassData(className);
         return this.defineClass(className,data,0,data.length);
     }
@@ -58,10 +61,12 @@ public class MyTest16 extends ClassLoader{
         Class<?> clazz = classLoader.loadClass("com.jsun999.example.demo.MyTest1");
         Object object = clazz.newInstance();
         System.out.println(object);
+        System.out.println(object.getClass().getClassLoader());
     }
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         MyTest16 loader1 = new MyTest16("loader1");
-        test(loader1);
+        MyTest16 loader2 = new MyTest16(loader1,"loader2");
+        test(loader2);
     }
 
 
