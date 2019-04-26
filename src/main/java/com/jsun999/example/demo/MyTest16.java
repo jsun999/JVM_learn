@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public class MyTest16 extends ClassLoader{
     private String classLoaderName;
-    private String path;
+    private String asf;
     private String fileExtentsion = ".class";
     public MyTest16(String classLoaderName){
         super();
@@ -19,8 +19,8 @@ public class MyTest16 extends ClassLoader{
         this.classLoaderName = classLoaderName;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setAsf(String asf) {
+        this.asf = asf;
     }
 
     @Override
@@ -41,7 +41,7 @@ public class MyTest16 extends ClassLoader{
         ByteArrayOutputStream baos = null;
         className = className.replace(".","/");
         try{
-            is = new FileInputStream(new File(this.path+className + this.fileExtentsion));
+            is = new FileInputStream(new File(this.asf+className + this.fileExtentsion));
             baos = new ByteArrayOutputStream();
             int ch = 0;
             while(-1 !=(ch=is.read())){
@@ -69,13 +69,29 @@ public class MyTest16 extends ClassLoader{
     }
     public static void main(String[] args) throws IllegalAccessException, InstantiationException, ClassNotFoundException {
         MyTest16 loader1 = new MyTest16("loader1");
-        loader1.setPath("E:\\my_idea_project\\jvm_learn\\target\\classes\\");
+//        loader1.setPath("E:\\my_idea_project\\jvm_learn\\target\\classes\\");
+        loader1.setAsf("C:\\Users\\jsun9\\Desktop\\");
         Class<?> clazz = loader1.loadClass("com.jsun999.example.demo.MyTest1");
         System.out.println("class:" + clazz.hashCode());
         Object object = clazz.newInstance();
         System.out.println(object);
         System.out.println(object.getClass().getClassLoader());
+
+//        MyTest16 loader2 = new MyTest16("loader2");
+        MyTest16 loader2 = new MyTest16(loader1,"loader2");
+        loader2.setAsf("C:\\Users\\jsun9\\Desktop\\");
+        Class<?> clazz2 = loader2.loadClass("com.jsun999.example.demo.MyTest1");
+        System.out.println("class:" + clazz2.hashCode());
+        Object object2 = clazz2.newInstance();
+        System.out.println(object2);
+        System.out.println();
+
+        MyTest16 loader3 = new MyTest16(loader2,"loader3");
+        loader3.setAsf("C:\\Users\\jsun9\\Desktop\\");
+        Class<?> clazz3 = loader3.loadClass("com.jsun999.example.demo.MyTest1");
+        System.out.println("class:" + clazz3.hashCode());
+        Object object3 = clazz3.newInstance();
+        System.out.println(object3);
+
     }
-
-
 }
