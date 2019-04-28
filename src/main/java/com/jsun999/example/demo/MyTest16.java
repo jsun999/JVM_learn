@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-
+//删除class文件以加载
 public class MyTest16 extends ClassLoader{
     private String classLoaderName;
     private String asf;
