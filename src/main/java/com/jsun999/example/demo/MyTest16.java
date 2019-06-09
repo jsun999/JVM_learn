@@ -19,14 +19,17 @@ public class MyTest16 extends ClassLoader{
         this.classLoaderName = classLoaderName;
     }
 
+    public MyTest16(ClassLoader parent){
+        super(parent);
+    }
     public void setAsf(String asf) {
         this.asf = asf;
     }
 
-    @Override
-    public String toString() {
-        return "["+ this.classLoaderName+"]";
-    }
+//    @Override
+//    public String toString() {
+//        return "["+ this.classLoaderName+"]";
+//    }
 
     @Override
     protected Class<?> findClass(String className) {
